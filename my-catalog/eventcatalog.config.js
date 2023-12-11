@@ -3,7 +3,7 @@ module.exports = {
   tagline: 'Discover, Explore and Document your Event Driven Architectures',
   organizationName: 'Your Company',
   projectName: 'Event Catalog',
-  editUrl: 'https://github.com/boyney123/eventcatalog-demo/edit/master',
+  editUrl: 'https://github.com/aibacetat/catalogo/edit/main/my-catalog',
   trailingSlash: true,
   primaryCTA: {
     label: 'Explore Events',
@@ -31,8 +31,21 @@ module.exports = {
     { label: 'Services', href: '/services' },
     { label: 'Visualiser', href: '/visualiser' },
     { label: '3D Node Graph', href: '/overview' },
-    { label: 'GitHub', href: 'https://github.com/boyney123/eventcatalog-demo/edit/master' }
+    { label: 'GitHub', href: 'https://github.com/aibacetat/catalogo/edit/main/my-catalog' }
   ],
+  generators: [
+    [
+     '@eventcatalog/plugin-doc-generator-asyncapi',
+     {
+       //path to your AsyncApi files
+       pathToSpec: [path.join(__dirname, 'drops/asyncapi.yml')],
+   
+       //version events if already in catalog (optional)
+       versionEvents: true,
+       domainName: 'ejemplo'
+     },
+    ],
+   ],
   users: [
     {
       id: 'dboyne',
@@ -54,3 +67,4 @@ module.exports = {
     },
   ],
 }
+
