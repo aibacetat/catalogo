@@ -1,0 +1,14 @@
+{
+    "id": "deliveryEvent",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "eventType": {
+            "type": "string"
+        },
+        "stampTime": {
+            "type": "string",
+            "format": "date-time"
+        }
+    }
+}

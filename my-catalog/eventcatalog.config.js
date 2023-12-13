@@ -1,7 +1,8 @@
+const path = require('path');
 module.exports = {
   title: 'EventCatalog',
   tagline: 'Discover, Explore and Document your Event Driven Architectures',
-  organizationName: 'Your Company',
+  organizationName: 'Banco Bci',
   projectName: 'Event Catalog',
   editUrl: 'https://github.com/aibacetat/catalogo/edit/main/my-catalog',
   trailingSlash: true,
@@ -33,19 +34,6 @@ module.exports = {
     { label: '3D Node Graph', href: '/overview' },
     { label: 'GitHub', href: 'https://github.com/aibacetat/catalogo/edit/main/my-catalog' }
   ],
-  generators: [
-    [
-     '@eventcatalog/plugin-doc-generator-asyncapi',
-     {
-       //path to your AsyncApi files
-       pathToSpec: [path.join(__dirname, 'drops/asyncapi.yml')],
-   
-       //version events if already in catalog (optional)
-       versionEvents: true,
-       domainName: 'ejemplo'
-     },
-    ],
-   ],
   users: [
     {
       id: 'dboyne',
@@ -65,6 +53,20 @@ module.exports = {
       avatarUrl: 'https://i.pinimg.com/originals/30/d9/09/30d90918935f27240759e4bafa0bba55.jpg',
       role: 'Owner',
     },
+  ],
+  generators: 
+  [
+    [
+      '@eventcatalog/plugin-doc-generator-asyncapi',
+    {
+      //path to your AsyncApi files
+      pathToSpec: [path.join(__dirname, 'drops/asyncapi.yml')],
+
+      //version events if already in catalog (optional)
+      versionEvents: true,
+      domainName: 'ejemplo1'
+    },
+      ],
   ],
 }
 

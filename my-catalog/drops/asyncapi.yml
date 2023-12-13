@@ -1,72 +1,41 @@
-asyncapi: '3.0.0'
+asyncapi: 2.4.0
 info:
-  title: 'CoreBanking.bancapersonas.creado'
-  version: 'V1.0.0'
-  description: Este es un ejemplo de Contrato AsyncApi
-  "termsOfService": "https://bcibank.atlassian.net/wiki/spaces/~7120202c2030c997e242b787c60fe004bc2fca/pages/3944316987/Esquema+de+Eventos"
-  "contact": {
-            "name": "Aaron Ibaceta",
-            "email": "aibacet@bci.cl"
-        }
-  "x-owner": {
-            "name": "Eduardo Vergara",
-            "email": "eduardo.vergara@bci.cl",
-        }
-  "x-architect": {
-            "name": "Rodrigo Catalan",
-            "email": "rodrigo.catalan@bci.cl",
-        }
+  title: ResultsDataService
+  version: 1.0.0
+  description: Results API
+servers:
+  rabbitmq:
+    url: localhost
+    protocol: amqp
+defaultContentType: application/json
 channels:
-  transactions:
-    address: /
-    messages:
-      transaction_Message:
-        $ref: '#/components/messages/TransactionMessage'
-
+  deliveries/deliveryevent:
+    subscribe:
+      operationId: NotifyDeliveryCreated
+      summary: Inform when delivery is created.
+      message:
+        $ref: '#/components/messages/deliveryEvent'
+  delivery-event:
+    publish:
+      operationId: DeliveryCreatedConsumer
+      summary: Updates deliverymapfeatures using Delivery event
+      message:
+        payload:
+          $ref: '#/components/schemas/deliveryEvent'
 components:
-  messages:
-    TransactionMessage:
-      summary: 'Mensaje de Transacción Bancaria'
-      payload:
-        $ref: '#/components/schemas/TransactionPayload'
-      headers:
-        type: object
-        properties:
-          eventId:
-            type: string
-          eventType:
-            type: string
-          entityId:
-            type: string
-          entityType:
-            type: string
-          timestamp:
-            type: string
-            format: 'date-time'
-          dateTime:
-            type: string
-            format: 'date-time'
-          version:
-            type: string
-          domain:
-            type: string
-
   schemas:
-    TransactionPayload:
+    deliveryEvent:
+      id: deliveryEvent
       type: object
+      additionalProperties: false
       properties:
-        transaction_id:
+        eventType:
           type: string
-        amount:
-          type: number
-        currency:
+        stampTime:
           type: string
-        sender_account:
-          type: string
-        receiver_account:
-          type: string
-        data:
-          type: object
-          # Agrega las propiedades específicas de tu carga útil de datos aquí
-
-# Puedes agregar más componentes, como definiciones de esquemas para otros eventos, según sea necesario.
+          format: date-time
+  messages:
+    deliveryEvent:
+      payload:
+        $ref: '#/components/schemas/deliveryEvent'
+      name: deliveryEvent
